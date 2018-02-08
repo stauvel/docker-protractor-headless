@@ -12,21 +12,11 @@ PhantomJS is [discouraged by Protractor creators](https://angular.github.io/prot
 
 To be perfectly honest - it is a [real chrome running on xvfb](http://tobyho.com/2015/01/09/headless-browser-testing-xvfb/). Therefore you have every confidence that the tests are run on the real thing.
 
-## Supported tags
-
-* chrome59, latest
-* chrome58
-* chrome56
-* chrome55
-* chrome54
-
-Please note that chrome57 is not available, as it does not work reliably with Ptoractor. There were intermittent test failures, usually around selecting elements `by.binding`.
-
 ## What is included in the latest?
 
 The image in the latest version contains the following packages in their respective versions:
 
-* Chrome - 59
+* Chrome - latest stable (64)
 * Protractor - 4.0.14
 * Node.js - 6.9.4
 * Chromedriver - 2.32
@@ -40,7 +30,7 @@ Starting with Chrome 58 Jasmine and Mocha are no longer included, assuming the p
 # Usage
 
 ```
-docker run -it --privileged --rm --net=host -v /dev/shm:/dev/shm -v $(pwd):/protractor webnicer/protractor-headless [protractor options]
+docker run -i --privileged --rm --net=host -v /dev/shm:/dev/shm -v $(pwd):/protractor webnicer/protractor-headless [protractor options]
 ```
 
 This will run protractor in your current directory, so you should run it in your tests root directory. It is useful to create a script, for example /usr/local/bin/protractor-headless such as this:
@@ -48,7 +38,7 @@ This will run protractor in your current directory, so you should run it in your
 ```
 #!/bin/bash
 
-docker run -it --privileged --rm --net=host -v /dev/shm:/dev/shm -v $(pwd):/protractor webnicer/protractor-headless $@
+docker run -i --privileged --rm --net=host -v /dev/shm:/dev/shm -v $(pwd):/protractor webnicer/protractor-headless $@
 ```
 
 The script will allow you to run dockerised protractor like so:
@@ -64,14 +54,14 @@ The image adds `/protractor/node_modules` directory to its `NODE_PATH` environme
 Starting with version [1.10](https://docs.docker.com/release-notes/docker-engine/#1100-2016-02-04), Docker supports the `--shm-size` flag, which renders the cumbersome mapping of `/dev/shm` obsolete. Therefore, in Docker 1.10+ you could run the image as follows:
 
 ```
-docker run -it --privileged --rm --net=host --shm-size 2g -v $(pwd):/protractor webnicer/protractor-headless [protractor options]
+docker run -i --privileged --rm --net=host --shm-size 2g -v $(pwd):/protractor webnicer/protractor-headless [protractor options]
 ```
 
 ## Setting up custom screen resolution
 
 The default screen resolution is **1280x1024** with **24-bit color**. You can set a custom screen resolution and color depth via the **SCREEN_RES** env variable, like this:
 ```
-docker run -it --privileged --rm --net=host -e SCREEN_RES=1920x1080x24 -v /dev/shm:/dev/shm -v $(pwd):/protractor webnicer/protractor-headless [protractor options]
+docker run -i --privileged --rm --net=host -e SCREEN_RES=1920x1080x24 -v /dev/shm:/dev/shm -v $(pwd):/protractor webnicer/protractor-headless [protractor options]
 ```
 
 
